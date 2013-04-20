@@ -1,11 +1,6 @@
 
-use <thread.scad>
-use <isothread.scad>
-
-pi = 3.14159265;
-
-//english_thread(1/4, 10, 1);
-//thread_out(8,16);
+include <MCAD/stepper.scad>
+include <isothread.scad>
 
 thickness = 2;
 cut_margin = 6;
@@ -193,6 +188,13 @@ module platform(width, height, depth, distance, offset) {
   translate([0,height/2-thickness*6+offset*2,depth+5]) {
     cube([distance,thickness*6,distance-depth*2]);
   }
+  translate([-30,height/2-thickness*6+offset*2,distance/2-15]) {
+    difference() {
+      cube([30, thickness*6, 30]);
+      translate([15,-0.1,15]) rotate([-90,0,0]) cylinder(thickness*6+0.2, 10, 10);
+    }
+    translate([15,-0.1,15]) rotate([-90,0,0]) hex_nut(12,thickness*6+0.2);
+  }
   translate([width/2, height/2-thickness*3+offset*2, depth/2]) {
     cylinder(20, thickness*3, thickness*3);
   }
@@ -205,8 +207,15 @@ module platform(width, height, depth, distance, offset) {
   translate([distance-width/2, height/2-thickness*3+offset*2, distance-depth+thickness]) {
     cylinder(20, thickness*3, thickness*3);
   }
+  rotate([90,0,0]) {
+    translate([-15,distance/2,height/2-54]) {
+      motor(Nema23, NemaMedium, dualAxis=false);
+    }
+    translate([-15,distance/2,-height*2+height/2-70]) {
+      thread_out(12,height*2);
+    }
+  }
 }
 
-platform(60, 300, 25, 200, 100);
-//mirror([0,1,1]) metric_thread(30, 60, 600);
-mirror([0,1,1]) thread_out(25,100,300);
+platform(60, 200, 25, 200, 130*sin(180*$t));
+

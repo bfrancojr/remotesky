@@ -9,7 +9,7 @@
 //hex_nut(8);
 //hex_nut(10);
 
-hex_bolt(6,12);
+//hex_bolt(6,12);
 //hex_bolt(8,16);
 //hex_bolt(10,16);
 //hex_bolt(12,24);
@@ -26,11 +26,11 @@ function get_thr_qual(dia) = lookup(dia, [
 function get_sh_qual(dia) = lookup(dia, [
 [5,10],[6,12],[7,14],[8,16],[10,20],[12,24],[14,28],[16,32],[18,36],[20,40],[22,44],[24,48],[27,54],[30,60],[33,66],[36,72],[39,78],[42,84],[45,90],[48,96],[52,104],[56,112],[60,120],[64,128],[78,156]]);
 
-module hex_nut(dia)
+module hex_nut(dia, hi)
 {
 	$fn = get_sh_qual(dia);
 	thr = get_thr_qual(dia);
-	hi = hex_nut_hi(dia);
+	hi = !hi? hex_nut_hi(dia) : hi;
 	difference()
 	{
 		cylinder(r = hex_nut_dia(dia)/2,h = hi, $fn=6);
