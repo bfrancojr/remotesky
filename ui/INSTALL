@@ -1,0 +1,3 @@
+1 - checkout git://github.com/dps/piui.git
+2 - copy remotesky.py into it.
+3 - run python remotesky.py
